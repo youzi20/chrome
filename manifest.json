@@ -1,0 +1,41 @@
+{
+    "manifest_version": 3,
+    "version": "1.0",
+    "name": "youzi",
+    "description": "youzi test",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "contextMenus"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content-script.js"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "options_page": "options/options.html",
+    "action": {
+        "default_popup": "popup/index.html",
+        "default_icon": {
+            "16": "/images/icon/icon.png",
+            "32": "/images/icon/icon@2x.png",
+            "48": "/images/icon/icon@3x.png",
+            "128": "/images/icon/icon@8x.png"
+        }
+    },
+    "icons": {
+        "16": "/images/icon/icon.png",
+        "32": "/images/icon/icon@2x.png",
+        "48": "/images/icon/icon@3x.png",
+        "128": "/images/icon/icon@8x.png"
+    }
+}
