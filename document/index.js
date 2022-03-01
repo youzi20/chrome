@@ -27,11 +27,9 @@
     }
 
     const onMouseMoveHandle = (e) => {
-        const { pageX, pageY } = e;
-
-        console.log(e);
-
-        const element = document.elementFromPoint(pageX, pageY);
+        const { clientX, clientY } = e;
+        
+        const element = document.elementFromPoint(clientX, clientY);
 
         createMask(element);
     }
