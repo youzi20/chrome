@@ -12,7 +12,7 @@ FileTree.prototype.getDirTree = function (entry) {
 
     const pathList = [];
 
-    console.log("tree", entry, tree);
+    // console.log("tree", entry, tree);
 
     if (tree.length > 0) {
         tree.forEach(item => {
@@ -43,13 +43,15 @@ FileTree.prototype.getDirTree = function (entry) {
 FileTree.prototype.getEntry = function (reString) {
     const entry = {};
 
-    const re = new RegExp(reString.replace(/\*/ig, "(.*)"), "i");
+    console.log(this._tree);
+
+    const re = new RegExp(reString, "i");
 
     this._tree.forEach(item => {
         const match = item.match(re);
 
         if (match) {
-            entry[match[2]] = item;
+            entry[match[1]] = item;
         }
     });
 

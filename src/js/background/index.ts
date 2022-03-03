@@ -11,7 +11,7 @@ const createContextMenus = () => {
         const tab = await getCurrentTab();
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            files: ['document/injectedScript.js']
+            files: ['./dist/document/injected-script.js']
         });
     }
 

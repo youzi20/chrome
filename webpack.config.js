@@ -7,7 +7,7 @@ const fileTree = new FileTree({
 });
 
 module.exports = {
-    entry: fileTree.getEntry(path.resolve(__dirname, "./src/*/*/index.ts")),
+    entry: fileTree.getEntry(path.resolve(__dirname, "./src/.*/(.*)/index.ts")),
     output: {
         filename: '[name].js',
         path: path.resolve(__dirname, 'dist'),
