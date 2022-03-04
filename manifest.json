@@ -15,16 +15,16 @@
                 "<all_urls>"
             ],
             "js": [
-                "./dist/content-script.js"
+                "./dist/content-script/index.js"
             ]
         }
     ],
     "background": {
-        "service_worker": "./dist/background.js"
+        "service_worker": "./dist/background/index.js"
     },
-    "options_page": "options/options.html",
+    "options_page": "./dist/options/index.html",
     "action": {
-        "default_popup": "popup/index.html",
+        "default_popup": "./dist/popup/index.html",
         "default_icon": {
             "16": "/assets/images/icon/icon.png",
             "32": "/assets/images/icon/icon@2x.png",

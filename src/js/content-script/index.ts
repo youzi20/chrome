@@ -1,5 +1,4 @@
 // @ts-nocheck
-
 console.log("onload")
 
 
@@ -14,7 +13,6 @@ console.log("onload")
 
 
 window.addEventListener("message", function (e) {
-
     chrome.runtime.sendMessage(
         { ...e.data, width: window.outerWidth, height: window.outerHeight },
         function (response) {

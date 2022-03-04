@@ -1,17 +1,14 @@
+// @ts-nocheck
+
 var InjectedScript = function () {
     this.selectDom = null;
     this.maskDiv = null;
-
-    this.data = {
-        text: null,
-        images: null
-    }
 
     this.eventListener();
 }
 
 InjectedScript.prototype.getText = function () {
-    this.data.text = this.selectDom.innerText;
+    return this.selectDom.innerText;
 }
 
 InjectedScript.prototype.getImages = function () {
@@ -24,7 +21,7 @@ InjectedScript.prototype.getImages = function () {
         })
     });
 
-    this.data.images = [...images];
+    return images;
 }
 
 InjectedScript.prototype.createMask = function () {
@@ -57,11 +54,22 @@ InjectedScript.prototype.onMouseMoveHandle = function (e) {
 }
 
 InjectedScript.prototype.onClickHandle = function (e) {
-    this.getText();
-    this.getImages();
+    e.preventDefault();
 
-    window.postMessage({ ticker: "document-injected-script", data: this.data }, '*');
-    this.dispose();
+    const data = {
+        text: this.getText(),
+        images: this.getImages()
+    }
+
+    const keyName = window.location.host.replace(/\./ig, "_") + "_" + Date.now();
+
+    console.log(keyName, data);
+
+    chrome.storage.sync.set({ [keyName]: data }, () => {
+        window.postMessage({ ticker: "document-injected-script", storageKey: keyName }, '*');
+        this.dispose();
+    });
+
 }
 
 InjectedScript.prototype.eventListener = function () {

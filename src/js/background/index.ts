@@ -1,4 +1,5 @@
 // @ts-nocheck
+chrome.storage.sync.clear()
 
 const getCurrentTab = async () => {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
@@ -38,14 +39,16 @@ const listenerOnMessage = (request, sender, sendResponse) => {
     const { ticker } = request;
 
     if (ticker === "document-injected-script") {
-        const { width, height } = request;
+        const { storageKey, width, height } = request;
         chrome.windows.create({
             type: "popup",
-            url: "./document/index.html",
+            url: "./dist/document/index.html?storageKey=" + storageKey,
             width: 375,
             height: 500,
             top: Math.floor((height - 500) / 2),
             left: Math.floor((width - 375) / 2),
+        }, () => {
+            console.log("创建成功");
         });
     }
 }
@@ -59,44 +62,3 @@ chrome.runtime.onInstalled.addListener(({ reason }) => {
 
 // 监听信息传输
 chrome.runtime.onMessage.addListener(listenerOnMessage);
-
-
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     console.log(request, sender);
-//     chrome.windows.create({ url: "./document/index.html", type: "popup", width: 1024, height: 768 });
-
-//     sendResponse("以获取");
-// });
-
-
-
-// const sendMessage = async () => {
-//     const tab = await getCurrentTab();
-
-//     chrome.tabs.sendMessage(
-//         tab.id,
-//         { greeting: '你好，我是background呀，我主动发消息给content-script！' },
-//         function (response) {
-//             console.log('收到来自content-script的回复：' + response);
-//         }
-//     );
-// }
-
-// chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-//     console.log('script');
-//     console.log(request, sender, sendResponse);
-//     sendResponse('backg:' + JSON.stringify(request));
-// });
-
-
-// chrome.contextMenus.onClicked.addListener(
-//     function (clickData, tab) {
-//         console.log('onClicked', clickData, "tab", tab)
-//         // sendMessage();
-//         injectedScript();
-//     }
-// );
-
-
-
-
