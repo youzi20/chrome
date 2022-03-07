@@ -13,7 +13,7 @@ InjectedScript.prototype.getText = function () {
 
 InjectedScript.prototype.getImages = function () {
     const images = [];
-    const nodes = this.selectDom.querySelectorAll("img");
+    const nodes = this.selectDom.parentElement.querySelectorAll("img");
 
     nodes.forEach(item => {
         images.push({
@@ -55,6 +55,7 @@ InjectedScript.prototype.onMouseMoveHandle = function (e) {
 
 InjectedScript.prototype.onClickHandle = function (e) {
     e.preventDefault();
+    e.stopPropagation()
 
     const data = {
         text: this.getText(),

@@ -23,10 +23,13 @@ module.exports = {
                 inject: false,
                 filename: item + ".html",
                 templateContent: ({ htmlWebpackPlugin }) =>
-                    `<!doctype html><html lang="cn"><head><meta charset="utf-8"></head><body><div id="root"></div><script src="./index.js"></script></body></html>`
+                    `<!doctype html><html lang="cn"><head><meta charset="utf-8"><link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,700"></head><body><div id="root"></div><script src="./index.js"></script></body></html>`
             })
         ),
     ],
+    resolve: {
+        extensions: ['.ts', '.tsx', '.js', '.jsx'],
+    },
     module: {
         rules: [
             {
@@ -35,8 +38,9 @@ module.exports = {
             },
             {
                 test: /\.tsx?$/,
-                loader: 'ts-loader'
-            }
+                use: 'ts-loader',
+                exclude: /node_modules/,
+            },
         ]
     },
     devtool: "source-map"

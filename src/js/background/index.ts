@@ -19,9 +19,9 @@ const createContextMenus = () => {
     chrome.contextMenus.create(
         {
             id: "main",
-            title: "测试右键菜单",
+            title: "采集网页内容",
         },
-        () => { console.log('测试右键菜单'); }
+        () => { console.log('采集网页内容'); }
     );
 
     chrome.contextMenus.onClicked.addListener(
