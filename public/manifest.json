@@ -1,0 +1,41 @@
+{
+    "manifest_version": 3,
+    "version": "0.0.1",
+    "name": "youzi",
+    "description": "youzi chrome",
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting",
+        "contextMenus"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "./content-script/index.js"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "./background/index.js"
+    },
+    "options_page": "./options/index.html",
+    "action": {
+        "default_popup": "./popup/index.html",
+        "default_icon": {
+            "16": "./assets/images/icon/icon.png",
+            "32": "./assets/images/icon/icon@2x.png",
+            "48": "./assets/images/icon/icon@3x.png",
+            "128": "./assets/images/icon/icon@8x.png"
+        }
+    },
+    "icons": {
+        "16": "./assets/images/icon/icon.png",
+        "32": "./assets/images/icon/icon@2x.png",
+        "48": "./assets/images/icon/icon@3x.png",
+        "128": "./assets/images/icon/icon@8x.png"
+    }
+}

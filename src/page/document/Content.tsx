@@ -1,22 +1,7 @@
 import React, { useEffect, useMemo, useState } from "react";
-import styled, { createGlobalStyle } from "styled-components";
+import styled from "@emotion/styled";
 
 import { getChromeStorageSync, getLocationSearch } from "../../utils";
-
-const Global = createGlobalStyle`
-html {
-    min-height: 100%;
-    background: #f3f4f5;
-    overflow: hidden;
-}
-
-pre {
-    font-family: "Montserrat";
-    font-size: 12px;
-    padding: 5px;
-    background: #f3f4f5;
-}
-`;
 
 const SelectBar = styled.div`
 display: flex;
@@ -136,18 +121,21 @@ const Content = () => {
     }, []);
 
     return <>
-        <Global></Global>
         <SelectBar>
             {[
                 { text: "文字", value: "text" },
                 { text: "图片", value: "images" },
             ].map(item =>
-                <SelectTab className={checked[item.value] ? "active" : ""} onClick={() => selectChangeHandle(item)}>
+                <SelectTab
+                    className={checked[item.value] ? "active" : ""}
+                    onClick={() => selectChangeHandle(item)}
+                    key={item.value}
+                >
                     {item.text}
                 </SelectTab>)}
         </SelectBar>
         <Body>
-            {sort.map(key => checked[key] ? <Card>
+            {sort.map(key => checked[key] ? <Card key={key}>
                 <Title>{checked[key]}</Title>
                 <Box>
                     {key === "text" ? <TextWrapper text={data?.text} /> : null}

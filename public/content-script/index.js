@@ -1,0 +1,4 @@
+({"./src/js/content-script/index.ts":
+/*!****************************************!*\
+  !*** ./src/js/content-script/index.ts ***!
+  \****************************************/function(){var n=this&&this.__assign||function(){return(n=Object.assign||function(t){for(var n,e=1,o=arguments.length;e<o;e++)for(var i in n=arguments[e])Object.prototype.hasOwnProperty.call(n,i)&&(t[i]=n[i]);return t}).apply(this,arguments)};console.log("onload"),window.addEventListener("message",function(t){chrome.runtime.sendMessage(n(n({},t.data),{width:window.outerWidth,height:window.outerHeight}),function(t){console.log("收到来自后台的回复："+t)})},!1)}})["./src/js/content-script/index.ts"]();

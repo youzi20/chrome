@@ -70,7 +70,6 @@ InjectedScript.prototype.onClickHandle = function (e) {
         window.postMessage({ ticker: "document-injected-script", storageKey: keyName }, '*');
         this.dispose();
     });
-
 }
 
 InjectedScript.prototype.eventListener = function () {

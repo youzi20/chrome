@@ -3,6 +3,7 @@
 .idea
 .history
 .vscode
+yarn.lock
 node_modules
 package-lock.json
 /dist

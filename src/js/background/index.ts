@@ -1,4 +1,6 @@
 // @ts-nocheck
+console.log("init");
+
 chrome.storage.sync.clear()
 
 const getCurrentTab = async () => {
@@ -7,34 +9,44 @@ const getCurrentTab = async () => {
     return tab;
 }
 
+const CONTEXT_MENUS = [
+    { id: "collect", title: "采集网页内容" },
+    { parentId: "collect", id: "collect_select", title: "手动选择" },
+    { parentId: "collect", id: "collect_image", title: "采集所有图片" },
+]
+
 const createContextMenus = () => {
-    const injectedScript = async () => {
+    const injectedScript = async (files) => {
         const tab = await getCurrentTab();
         chrome.scripting.executeScript({
             target: { tabId: tab.id },
-            files: ['./dist/document/injected-script.js']
+            files
         });
     }
 
-    chrome.contextMenus.create(
-        {
-            id: "main",
-            title: "采集网页内容",
-        },
-        () => { console.log('采集网页内容'); }
+    CONTEXT_MENUS.forEach(menu =>
+        chrome.contextMenus.create(menu,
+            () => {
+                console.log('contextMenus: success')
+            }
+        )
     );
 
     chrome.contextMenus.onClicked.addListener(
-        function (clickData, tab) {
-            console.log('onClicked', clickData, "tab", tab)
-            injectedScript();
+        function (info, tab) {
+            console.log('onClicked', info, "tab", tab)
+
+            const { menuItemId } = info;
+
+            if (menuItemId === "collect_select") injectedScript(['./document/injected-collect.js']);
         }
     );
 }
 
 const listenerOnMessage = (request, sender, sendResponse) => {
-    console.log(request);
     sendResponse(true);
+
+    console.log(request);
 
     const { ticker } = request;
 
@@ -42,7 +54,7 @@ const listenerOnMessage = (request, sender, sendResponse) => {
         const { storageKey, width, height } = request;
         chrome.windows.create({
             type: "popup",
-            url: "./dist/document/index.html?storageKey=" + storageKey,
+            url: "./document/index.html?storageKey=" + storageKey,
             width: 375,
             height: 500,
             top: Math.floor((height - 500) / 2),
@@ -62,3 +74,28 @@ chrome.runtime.onInstalled.addListener(({ reason }) => {
 
 // 监听信息传输
 chrome.runtime.onMessage.addListener(listenerOnMessage);
+
+// const root = document.evaluate('//*[@id="main-content"]/div[2]/navigation-tree/div[2]', document).iterateNext();
+
+// const list = root.querySelectorAll(".direction-column > .navigation-tree__link");
+
+// const item = [];
+
+// list.forEach(el => {
+//     if (el.nodeName === "BUTTON") {
+//         const child = [], next = el.nextElementSibling;
+
+//         next.querySelectorAll(".navigation-tree__link").forEach(child =>
+//             child.push({ name: child.querySelector(".article-title").innerText })
+//         )
+
+//         item.push({
+//             name: el.querySelector(".section-title").innerText,
+//             child
+//         })
+//     } else {
+//         item.push({ name: el.querySelector(".article-title").innerText })
+//     }
+// })
+
+// JSON.stringify(item);

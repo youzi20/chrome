@@ -1,9 +1,11 @@
 const path = require('path');
+const uglify = require('uglifyjs-webpack-plugin');
 
 const HtmlWebpackPlugin = require("html-webpack-plugin")
 const WebpackChromeEntriesPlugin = require("./WebpackChromeEntries");
 
 module.exports = {
+    mode: "production",
     entry: WebpackChromeEntriesPlugin.getEntries([
         path.resolve(__dirname, "./src/js/**/*.ts"),
         {
@@ -13,11 +15,11 @@ module.exports = {
     ]),
     output: {
         filename: '[name].js',
-        path: path.resolve(__dirname, 'dist'),
+        path: path.resolve(__dirname, 'public'),
     },
     plugins: [
+        new uglify(),
         new WebpackChromeEntriesPlugin(),
-
         ...WebpackChromeEntriesPlugin.getHTMLEntries().map(item =>
             new HtmlWebpackPlugin({
                 inject: false,
